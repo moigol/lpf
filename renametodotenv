@@ -1,0 +1,32 @@
+DEBUG=all
+ADMIN_URI=admin
+ADMIN_CONTROLLER=admin
+
+SITE_TITLE=Light PHP Frame
+SITE_TAGLINE=Light and easy PHP Framework
+SITE_COPYRIGHT=©️2020 Light PHP Frame, All Rights Reserved.
+SITE_FORCE_HTTPS=false
+SITE_ADD_WWW=false
+SITE_CDN=false
+SITE_CDN_URL=false
+
+URL=http://lpf.loc/
+DB_HOST=localhost
+DB_NAME=lpf
+DB_USER=local
+DB_PASS=local
+DB_PREFIX=
+DB_ENCODING=utf8
+DB_LOG=false
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.eu.sparkpostmail.com
+MAIL_PORT=2525
+MAIL_USERNAME=SMTP_Injection
+MAIL_PASSWORD=0c399754d34780ec248a447c2fc65cc9660eb4e6
+MAIL_ENCRYPTION=tls
+
+FILE_EXT=php
+CONTROLLER=main
+DYNAMICPAGECONTROLLER=posts
+NOPAGE=errorpage

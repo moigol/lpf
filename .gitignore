@@ -1,0 +1,9 @@
+*.log
+/.idea
+/.git
+.env
+*.env
+/.env
+/dev
+.htaccess
+error_log

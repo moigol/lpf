@@ -1,0 +1,20 @@
+######## includes/user.php #131
+######## UPDATE
+public static function infoBy($field = false, $value = false)
+{
+    $return = false;
+    $db     = new DB();
+    
+    if($field && $value) {
+        $val = is_numeric($value) ? $value : "'".$value."'";
+        $sql = "SELECT u.*, um.*, ul.Name as UserLevel, ul.Code, ul.Link as DashboardURL 
+                FROM users u 
+                LEFT JOIN user_meta um ON um.UserID = u.UserID 
+                LEFT JOIN user_levels ul ON ul.UserLevelID = u.UserLevelID 
+                WHERE ".$field." = ".$val." LIMIT 1";
+        
+        $return = $db->queryOne($sql);
+    }
+    
+    return $return;
+}

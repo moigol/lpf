@@ -1,0 +1,25 @@
+######## includes/user.php #277
+######## UPDATE
+
+public static function dashboardLink( $urionly = false )
+{
+    $return = false;
+
+    if(self::isLoggedIn()) {
+        $level  = self::info('UserLevelID');
+        $theUrl = Level::info('Link',$level);
+        $return = ($urionly) ? $theUrl : Config::siteURL($theUrl);
+    } else {
+        $return = ($urionly) ? 'login/' : Config::siteURL('login/');
+    }
+    
+    return $return;
+}
+
+######## includes/view.php
+######## ADD
+
+public static function dashboardLink( $urionly = false )
+{
+    return User::dashboardLink( $urionly );
+}

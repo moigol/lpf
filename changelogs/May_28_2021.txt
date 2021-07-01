@@ -1,0 +1,63 @@
+######## includes/media.php #96
+######## UPDATE
+public static function upload($files = false, $ID = NULL, $Description = NULL)
+{
+    $return = [];
+    $files  = ($files) ? $files : $_FILES;                
+
+    foreach($files as $key => $file) 
+    {
+        if (is_array($files[$key]['name'])) {
+            $num_files = count($files[$key]['tmp_name']);
+            
+            for( $i=0; $i < $num_files; $i++ )
+            {
+                $data[self::$elemi]   = $ID;
+                $data[self::$descr] = $Description;
+
+                $file = [
+                    'name' => $files[$key]['name'][$i],
+                    'error' => $files[$key]['error'][$i],
+                    'tmp_name' => $files[$key]['tmp_name'][$i]
+                ];
+
+                $return[$key][] = self::move( $file, $data );
+            }
+
+        } else {
+
+            $data[self::$elemi]   = $ID;
+            $data[self::$descr] = $Description;
+
+            $return[$key] = self::move( $files[$key], $data );
+        }
+    }
+
+    return $return;
+}
+
+######## includes/media.php #144
+######## UPDATE
+public static function getOne($ID = NULL, $Description = NULL)
+{
+    if($ID) {
+        $db   = new DB();
+        $data = $db->from(self::$table)->where([self::$elemi => $ID, self::$descr => $Description])->order('DateAdded','DESC')->one();
+
+        return $data;
+    } else {
+        return false;
+    }
+}
+
+public static function getOneByID($ID = NULL)
+{
+    if($ID) {
+        $db   = new DB();
+        $data = $db->from(self::$table)->where([self::$keyid => $ID])->order('DateAdded','DESC')->one();
+
+        return $data;
+    } else {
+        return false;
+    }
+}

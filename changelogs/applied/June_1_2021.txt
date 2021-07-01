@@ -1,0 +1,83 @@
+######## includes/view.php #313
+######## UPDATE
+public static function form($type = 'text', $args, $e = true) 
+{
+    // TODO: Enhance this
+    $label = isset($args['label']) ? '<label>'.$args['label'].'</label>' : '';  
+    $name = isset($args['name']) ? ' name="'.$args['name'].'"' : '';    
+    $value = isset($args['value']) ? ' value="'.$args['value'].'"' : '';    
+    $class = isset($args['class']) ? ' class="'.$args['class'].'"' : '';    
+    $id = isset($args['id']) ? ' id="'.$args['id'].'"' : ' id="'.$args['name'].'"'; 
+    $placeholder = isset($args['placeholder']) ? ' placeholder="'.$args['placeholder'].'"' : '';    
+    $options = isset($args['options']) ? $args['options'] : array();    
+    $rel = isset($args['rel']) ? ' rel="'.$args['rel'].'"' : '';
+    $multi = isset($args['multiple']) ? ' multiple="true"' : '';
+    $style = isset($args['style']) ? ' style="'.$args['style'].'"' : '';
+    $readonly = isset($args['readonly']) ? ' readonly' : '';
+    $disabled = isset($args['disabled']) ? ' disabled' : '';
+    $inarray = isset($args['inarray']) ? $args['inarray'] : false;
+    $custom = isset($args['custom']) ? $args['custom'] : false;
+    $required = isset($args['required']) ? $args['required'] : false;
+    $rows = isset($args['rows']) ? ' rows="'.$args['rows'].'"' : '';
+    $cols = isset($args['cols']) ? ' cols="'.$args['cols'].'"' : '';
+
+    switch($type){  
+        case 'hidden':  
+                $return = $label.'<input type="hidden"'.$name.$value.$class.$id.' '.$custom.' />';  
+        break;
+
+        case 'text':    
+                $return = $label.'<input type="text"'.$name.$value.$class.$id.$rel.$placeholder.$style.$readonly.$disabled.' '.$custom.' />';   
+        break;  
+        case 'number':    
+                $return = $label.'<input type="number"'.$name.$value.$class.$id.$rel.$placeholder.$style.$readonly.$disabled.' '.$custom.' />'; 
+        break;
+        case 'textarea':    
+                $thevalue = isset($args['value']) ? $args['value'] : '';
+                $return = $label.'<textarea'.$name.$class.$id.$placeholder.$style.$readonly.$disabled.$rows.$cols.' '.$custom.'>'.stripslashes($thevalue).'</textarea>';   
+        break;  
+        case 'select':  
+                $return = $label.'<select'.$name.$id.$class.$rel.$multi.$style.$readonly.$disabled.' '.$custom.' '.$required.' >';  
+                foreach($options as $option) {  
+                    $val = explode(':', $option);   
+                    $thevalue = isset($args['value']) ? $args['value'] : '';
+                    $sel = $thevalue == $val[0] ? 'selected="selected"' : '';                   
+                    if(count($val) > 1) {   
+                        $return .= '<option value="'.$val[0].'" '.$sel.'>'.$val[1].'</option>'; 
+                    } else {    
+                        $return .= '<option value="'.$val[0].'" '.$sel.'>'.$val[0].'</option>'; 
+                    }   
+                }   
+                $return .= '</select>'; 
+        break;
+        case 'selecta': 
+                $return = $label.'<select'.$name.$id.$class.$rel.$multi.$style.$readonly.$disabled.' '.$custom.' '.$required.'>';   
+                $options = (array) $options;
+                foreach($options as $k => $v) { 
+                    $thevalue = isset($args['value']) ? $args['value'] : '';
+                    $sel = $thevalue == $k ? 'selected="selected"' : '';
+                    if($inarray) {
+                        if( (count($inarray) && in_array($k,$inarray)) || count($inarray) < 1 ) {
+                            $return .= '<option value="'.$k.'" '.$sel.'>'.$v.'</option>';       
+                        }
+                    } else {
+                        $return .= '<option value="'.$k.'" '.$sel.'>'.$v.'</option>';
+                    }
+                }   
+                $return .= '</select>'; 
+        break;
+        case 'upload':
+            $return = '<input '.$id.' class="fileup '.$args['class'].'" type="file" data-min-file-count="0" '.$name.' data-show-cancel="false" data-show-remove="false" data-show-upload="false" multiple '. $required .'>';            
+        break;
+        case 'uploadf':
+            $return = '<input '.$id.' class="file '.$args['class'].'" type="file" data-min-file-count="0" '.$name.' data-show-upload="yes" '. $required .'>';            
+        break;
+    }
+    $return = $type != 'hidden' ? $return.'<div class="clearfix"></div>' : $return;
+    
+    if($e) {
+        echo $return;
+    } else {
+        return $return; 
+    }
+}
